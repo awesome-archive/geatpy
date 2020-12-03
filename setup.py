@@ -20,7 +20,7 @@ from setuptools import setup
 LONG_DESCRIPTION = "Geatpy--The Genetic and Evolutionary Algorithms Toolbox for Python. http://www.geatpy.com"
 
 kwargs = dict(name = "geatpy",
-    version = "2.2.3",
+    version = "2.6.0",
     description = "Geatpy is a high-performance Genetic and Evolutionary Algorithms toolbox for Python.",
     author = "Geatpy Team",
     author_email = "geatpy@163.com",
@@ -28,7 +28,7 @@ kwargs = dict(name = "geatpy",
     packages=setuptools.find_packages(),
     include_package_data = True,    # Enabled list file: MANIFEST.in
     install_requires=[
-        'numpy>=1.16.0',
+        'numpy>=1.17.0',
         'matplotlib>=3.0.0',
         'scipy>=1.0.0',
     ],
@@ -45,6 +45,7 @@ kwargs = dict(name = "geatpy",
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
     ],
     long_description = LONG_DESCRIPTION,
     zip_safe = False,

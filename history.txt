@@ -1,5 +1,15 @@
 Version History
 
+2020.10.18 : v2.6.0 - An enhanced version.
+    ||
+2020.5.30 : v2.5.1 - A cumulative update.
+    ||
+2020.4.18 : v2.5.0 - A revolutionary update.
+    ||
+2020.2.09 : v2.4.0 - A more feature-rich version.
+    ||
+2020.1.14 : v2.3.0 - A more improved version.
+    ||
 2019.10.01 : v2.2.3 -  A cumulative performance update.
     ||
 2019.8.29 : v2.2.2 -  Added T_ENS and oop recombination & mutation operators.
