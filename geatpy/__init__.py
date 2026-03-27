@@ -1,160 +1,202 @@
 # -*- coding: utf-8 -*-
-"""
-geatpy  -  import all libs of geatpy
-
-"""
-
-import sys
+# flake8: noqa
+"""import all libs of geatpy."""
 
 __author__ = "Geatpy Team"
-__version__ = "2.2.3"
+__version__ = "2.7.0"
 
+# import classes and mathods
+from geatpy.Algorithm import Algorithm  # isort:skip
+from geatpy.Algorithm import MoeaAlgorithm  # isort:skip
+from geatpy.Algorithm import SoeaAlgorithm  # isort:skip
+from geatpy.optimize import optimize  # isort:skip
+from geatpy.Population import Population  # isort:skip
+from geatpy.Problem import Problem  # isort:skip
+from geatpy.PsyPopulation import PsyPopulation  # isort:skip
+# import moea algorithms
+from geatpy.algorithms.moeas.awGA.moea_awGA_templet import moea_awGA_templet
+from geatpy.algorithms.moeas.awGA.moea_psy_awGA_templet import \
+    moea_psy_awGA_templet
+from geatpy.algorithms.moeas.moead.moea_MOEAD_archive_templet import \
+    moea_MOEAD_archive_templet
+from geatpy.algorithms.moeas.moead.moea_MOEAD_DE_templet import \
+    moea_MOEAD_DE_templet
+from geatpy.algorithms.moeas.moead.moea_MOEAD_templet import moea_MOEAD_templet
+from geatpy.algorithms.moeas.nsga2.moea_NSGA2_archive_templet import \
+    moea_NSGA2_archive_templet
+from geatpy.algorithms.moeas.nsga2.moea_NSGA2_DE_templet import \
+    moea_NSGA2_DE_templet
+from geatpy.algorithms.moeas.nsga2.moea_NSGA2_templet import moea_NSGA2_templet
+from geatpy.algorithms.moeas.nsga2.moea_psy_NSGA2_archive_templet import \
+    moea_psy_NSGA2_archive_templet
+from geatpy.algorithms.moeas.nsga2.moea_psy_NSGA2_templet import \
+    moea_psy_NSGA2_templet
+from geatpy.algorithms.moeas.nsga3.moea_NSGA3_DE_templet import \
+    moea_NSGA3_DE_templet
+from geatpy.algorithms.moeas.nsga3.moea_NSGA3_templet import moea_NSGA3_templet
+from geatpy.algorithms.moeas.nsga3.moea_psy_NSGA3_templet import \
+    moea_psy_NSGA3_templet
+from geatpy.algorithms.moeas.pps.moea_PPS_MOEAD_DE_archive_templet import \
+    moea_PPS_MOEAD_DE_archive_templet
+from geatpy.algorithms.moeas.rvea.moea_psy_RVEA_RES_templet import \
+    moea_psy_RVEA_RES_templet
+from geatpy.algorithms.moeas.rvea.moea_psy_RVEA_templet import \
+    moea_psy_RVEA_templet
+from geatpy.algorithms.moeas.rvea.moea_RVEA_RES_templet import \
+    moea_RVEA_RES_templet
+from geatpy.algorithms.moeas.rvea.moea_RVEA_templet import moea_RVEA_templet
+# import soea algorithms
+from geatpy.algorithms.soeas.DE.soea_DE_best_1_bin_templet import \
+    soea_DE_best_1_bin_templet
+from geatpy.algorithms.soeas.DE.soea_DE_best_1_L_templet import \
+    soea_DE_best_1_L_templet
+from geatpy.algorithms.soeas.DE.soea_DE_currentToBest_1_bin_templet import \
+    soea_DE_currentToBest_1_bin_templet
+from geatpy.algorithms.soeas.DE.soea_DE_currentToBest_1_L_templet import \
+    soea_DE_currentToBest_1_L_templet
+from geatpy.algorithms.soeas.DE.soea_DE_currentToRand_1_templet import \
+    soea_DE_currentToRand_1_templet
+from geatpy.algorithms.soeas.DE.soea_DE_rand_1_bin_templet import \
+    soea_DE_rand_1_bin_templet
+from geatpy.algorithms.soeas.DE.soea_DE_rand_1_L_templet import \
+    soea_DE_rand_1_L_templet
+from geatpy.algorithms.soeas.DE.soea_DE_targetToBest_1_bin_templet import \
+    soea_DE_targetToBest_1_bin_templet
+from geatpy.algorithms.soeas.DE.soea_DE_targetToBest_1_L_templet import \
+    soea_DE_targetToBest_1_L_templet
+from geatpy.algorithms.soeas.ES.soea_ES_1_plus_1_templet import \
+    soea_ES_1_plus_1_templet
+from geatpy.algorithms.soeas.ES.soea_ES_miu_plus_lambda_templet import \
+    soea_ES_miu_plus_lambda_templet
+from geatpy.algorithms.soeas.GA.soea_EGA_templet import soea_EGA_templet
+from geatpy.algorithms.soeas.GA.soea_GGAP_SGA_templet import \
+    soea_GGAP_SGA_templet
+from geatpy.algorithms.soeas.GA.soea_multi_SEGA_templet import \
+    soea_multi_SEGA_templet
+from geatpy.algorithms.soeas.GA.soea_psy_EGA_templet import \
+    soea_psy_EGA_templet
+from geatpy.algorithms.soeas.GA.soea_psy_GGAP_SGA_templet import \
+    soea_psy_GGAP_SGA_templet
+from geatpy.algorithms.soeas.GA.soea_psy_SEGA_templet import \
+    soea_psy_SEGA_templet
+from geatpy.algorithms.soeas.GA.soea_psy_SGA_templet import \
+    soea_psy_SGA_templet
+from geatpy.algorithms.soeas.GA.soea_psy_steadyGA_templet import \
+    soea_psy_steadyGA_templet
+from geatpy.algorithms.soeas.GA.soea_psy_studGA_templet import \
+    soea_psy_studGA_templet
+from geatpy.algorithms.soeas.GA.soea_SEGA_templet import soea_SEGA_templet
+from geatpy.algorithms.soeas.GA.soea_SGA_templet import soea_SGA_templet
+from geatpy.algorithms.soeas.GA.soea_steadyGA_templet import \
+    soea_steadyGA_templet
+from geatpy.algorithms.soeas.GA.soea_studGA_templet import soea_studGA_templet
+# import benchmarks
+import geatpy.benchmarks
 # import the core
-lib_path = __file__[:-11] + 'core/'
-if lib_path not in sys.path:
-    sys.path.append(lib_path)
-from awGA import awGA
-from boundfix import boundfix
-from bs2int import bs2int
-from bs2real import bs2real
-from bs2ri import bs2ri
-from crowdis import crowdis
-from crtbp import crtbp
-from crtfld import crtfld
-from crtgp import crtgp
-from crtip import crtip
-from crtpc import crtpc
-from crtpp import crtpp
-from crtrp import crtrp
-from crtup import crtup
-from dup import dup
-from ecs import ecs
-from etour import etour
-from indexing import indexing
-import indicator
-from meshrng import meshrng
-from moeaplot import moeaplot
-from mutate import mutate
-from mutbga import mutbga
-from mutbin import mutbin
-from mutde import mutde
-from mutgau import mutgau
-from mutinv import mutinv
-from mutmove import mutmove
-from mutpolyn import mutpolyn
-from mutpp import mutpp
-from mutswap import mutswap
-from mutuni import mutuni
-from ndsortDED import ndsortDED
-from ndsortESS import ndsortESS
-from ndsortTNS import ndsortTNS
-from otos import otos
-from powing import powing
-from ranking import ranking
-from recdis import recdis
-from recint import recint
-from reclin import reclin
-from recndx import recndx
-from recombin import recombin
-from recsbx import recsbx
-from refgselect import refgselect
-from refselect import refselect
-from rps import rps
-from rwGA import rwGA
-from rws import rws
-from scaling import scaling
-from selecting import selecting
-from soeaplot import soeaplot
-from sus import sus
-from tour import tour
-from trcplot import trcplot
-from urs import urs
-from varplot import varplot
-from xovbd import xovbd
-from xovdp import xovdp
-from xovexp import xovexp
-from xovmp import xovmp
-from xovox import xovox
-from xovpmx import xovpmx
-from xovsec import xovsec
-from xovsh import xovsh
-from xovsp import xovsp
-from xovud import xovud
-
-# ========================import the EA framework=======================
-# import Classes and mathods
-lib_path = __file__[:-11]
-if lib_path not in sys.path:
-    sys.path.append(lib_path)
-from Algorithm import Algorithm
-from Algorithm import MoeaAlgorithm
-from Algorithm import SoeaAlgorithm
-from Population import Population
-from Problem import Problem
-from PsyPopulation import PsyPopulation
-
-# import operators in the EA framework
-from operators.mutation.Mutation import Mutation
-from operators.mutation.Mutbga import Mutbga
-from operators.mutation.Mutbin import Mutbin
-from operators.mutation.Mutde import Mutde
-from operators.mutation.Mutgau import Mutgau
-from operators.mutation.Mutinv import Mutinv
-from operators.mutation.Mutmove import Mutmove
-from operators.mutation.Mutpolyn import Mutpolyn
-from operators.mutation.Mutpp import Mutpp
-from operators.mutation.Mutswap import Mutswap
-from operators.mutation.Mutuni import Mutuni
-
-from operators.recombination.Recombination import Recombination
-from operators.recombination.Recdis import Recdis
-from operators.recombination.Recint import Recint
-from operators.recombination.Reclin import Reclin
-from operators.recombination.Recndx import Recndx
-from operators.recombination.Recsbx import Recsbx
-from operators.recombination.Xovbd import Xovbd
-from operators.recombination.Xovdp import Xovdp
-from operators.recombination.Xovexp import Xovexp
-from operators.recombination.Xovmp import Xovmp
-from operators.recombination.Xovox import Xovox
-from operators.recombination.Xovpmx import Xovpmx
-from operators.recombination.Xovsec import Xovsec
-from operators.recombination.Xovsh import Xovsh
-from operators.recombination.Xovsp import Xovsp
-from operators.recombination.Xovud import Xovud
-
-# import templates
-from templates.soeas.DE.DE_best_1_bin.soea_DE_best_1_bin_templet import soea_DE_best_1_bin_templet
-from templates.soeas.DE.DE_best_1_L.soea_DE_best_1_L_templet import soea_DE_best_1_L_templet
-from templates.soeas.DE.DE_rand_1_bin.soea_DE_rand_1_bin_templet import soea_DE_rand_1_bin_templet
-from templates.soeas.DE.DE_rand_1_L.soea_DE_rand_1_L_templet import soea_DE_rand_1_L_templet
-from templates.soeas.DE.DE_targetToBest_1_bin.soea_DE_targetToBest_1_bin_templet import soea_DE_targetToBest_1_bin_templet
-from templates.soeas.DE.DE_targetToBest_1_L.soea_DE_targetToBest_1_L_templet import soea_DE_targetToBest_1_L_templet
-from templates.soeas.ES.ES_1_plus_1_templet.soea_ES_1_plus_1_templet import soea_ES_1_plus_1_templet
-from templates.soeas.GA.EGA.soea_psy_EGA_templet import soea_psy_EGA_templet
-from templates.soeas.GA.EGA.soea_EGA_templet import soea_EGA_templet
-from templates.soeas.GA.SEGA.soea_psy_SEGA_templet import soea_psy_SEGA_templet
-from templates.soeas.GA.SEGA.soea_SEGA_templet import soea_SEGA_templet
-from templates.soeas.GA.SGA.soea_GGAP_SGA_templet import soea_GGAP_SGA_templet
-from templates.soeas.GA.SGA.soea_psy_GGAP_SGA_templet import soea_psy_GGAP_SGA_templet
-from templates.soeas.GA.SGA.soea_psy_SGA_templet import soea_psy_SGA_templet
-from templates.soeas.GA.SGA.soea_SGA_templet import soea_SGA_templet
-from templates.soeas.GA.steadyGA.soea_psy_steadyGA_templet import soea_psy_steadyGA_templet
-from templates.soeas.GA.steadyGA.soea_steadyGA_templet import soea_steadyGA_templet
-from templates.soeas.GA.studGA.soea_psy_studGA_templet import soea_psy_studGA_templet
-from templates.soeas.GA.studGA.soea_studGA_templet import soea_studGA_templet
-
-from templates.moeas.awGA.moea_awGA_templet import moea_awGA_templet
-from templates.moeas.awGA.moea_psy_awGA_templet import moea_psy_awGA_templet
-from templates.moeas.nsga2.moea_NSGA2_archive_templet import moea_NSGA2_archive_templet
-from templates.moeas.nsga2.moea_NSGA2_DE_templet import moea_NSGA2_DE_templet
-from templates.moeas.nsga2.moea_NSGA2_templet import moea_NSGA2_templet
-from templates.moeas.nsga2.moea_psy_NSGA2_archive_templet import moea_psy_NSGA2_archive_templet
-from templates.moeas.nsga2.moea_psy_NSGA2_templet import moea_psy_NSGA2_templet
-from templates.moeas.nsga3.moea_NSGA3_DE_templet import moea_NSGA3_DE_templet
-from templates.moeas.nsga3.moea_NSGA3_templet import moea_NSGA3_templet
-from templates.moeas.nsga3.moea_psy_NSGA3_templet import moea_psy_NSGA3_templet
-from templates.moeas.rvea.moea_psy_RVEA_RES_templet import moea_psy_RVEA_RES_templet
-from templates.moeas.rvea.moea_psy_RVEA_templet import moea_psy_RVEA_templet
-from templates.moeas.rvea.moea_RVEA_templet import moea_RVEA_templet
-from templates.moeas.rvea.moea_RVEA_RES_templet import moea_RVEA_RES_templet
+from geatpy.core import indicator
+from geatpy.core.awGA import awGA
+from geatpy.core.boundfix import boundfix
+from geatpy.core.bs2int import bs2int
+from geatpy.core.bs2real import bs2real
+from geatpy.core.bs2ri import bs2ri
+from geatpy.core.cdist import cdist
+from geatpy.core.crowdis import crowdis
+from geatpy.core.crtbp import crtbp
+from geatpy.core.crtfld import crtfld
+from geatpy.core.crtgp import crtgp
+from geatpy.core.crtidp import crtidp
+from geatpy.core.crtip import crtip
+from geatpy.core.crtpc import crtpc
+from geatpy.core.crtpp import crtpp
+from geatpy.core.crtri import crtri
+from geatpy.core.crtrp import crtrp
+from geatpy.core.crtup import crtup
+from geatpy.core.dup import dup
+from geatpy.core.ecs import ecs
+from geatpy.core.etour import etour
+from geatpy.core.indexing import indexing
+import geatpy.core.indicator
+from geatpy.core.mergecv import mergecv
+from geatpy.core.migrate import migrate
+from geatpy.core.moeaplot import moeaplot
+from geatpy.core.mselecting import mselecting
+from geatpy.core.mutate import mutate
+from geatpy.core.mutbga import mutbga
+from geatpy.core.mutbin import mutbin
+from geatpy.core.mutde import mutde
+from geatpy.core.mutgau import mutgau
+from geatpy.core.mutinv import mutinv
+from geatpy.core.mutmove import mutmove
+from geatpy.core.mutpolyn import mutpolyn
+from geatpy.core.mutpp import mutpp
+from geatpy.core.mutswap import mutswap
+from geatpy.core.mutuni import mutuni
+from geatpy.core.ndsortDED import ndsortDED
+from geatpy.core.ndsortESS import ndsortESS
+from geatpy.core.ndsortTNS import ndsortTNS
+from geatpy.core.otos import otos
+from geatpy.core.pbi import pbi
+from geatpy.core.powing import powing
+from geatpy.core.ranking import ranking
+from geatpy.core.rcs import rcs
+from geatpy.core.recdis import recdis
+from geatpy.core.recint import recint
+from geatpy.core.reclin import reclin
+from geatpy.core.recndx import recndx
+from geatpy.core.recombin import recombin
+from geatpy.core.recsbx import recsbx
+from geatpy.core.refgselect import refgselect
+from geatpy.core.refselect import refselect
+from geatpy.core.ri2bs import ri2bs
+from geatpy.core.rps import rps
+from geatpy.core.rwGA import rwGA
+from geatpy.core.rws import rws
+from geatpy.core.scaling import scaling
+from geatpy.core.selecting import selecting
+from geatpy.core.soeaplot import soeaplot
+from geatpy.core.sus import sus
+from geatpy.core.tcheby import tcheby
+from geatpy.core.tour import tour
+from geatpy.core.trcplot import trcplot
+from geatpy.core.urs import urs
+from geatpy.core.varplot import varplot
+from geatpy.core.xovbd import xovbd
+from geatpy.core.xovdp import xovdp
+from geatpy.core.xovexp import xovexp
+from geatpy.core.xovox import xovox
+from geatpy.core.xovpmx import xovpmx
+from geatpy.core.xovsec import xovsec
+from geatpy.core.xovsh import xovsh
+from geatpy.core.xovsp import xovsp
+from geatpy.core.xovud import xovud
+# import operators
+from geatpy.operators.migration.Migrate import Migrate
+from geatpy.operators.mutation.Mutation import Mutation
+from geatpy.operators.mutation.Mutbga import Mutbga
+from geatpy.operators.mutation.Mutbin import Mutbin
+from geatpy.operators.mutation.Mutde import Mutde
+from geatpy.operators.mutation.Mutgau import Mutgau
+from geatpy.operators.mutation.Mutinv import Mutinv
+from geatpy.operators.mutation.Mutmove import Mutmove
+from geatpy.operators.mutation.Mutpolyn import Mutpolyn
+from geatpy.operators.mutation.Mutpp import Mutpp
+from geatpy.operators.mutation.Mutswap import Mutswap
+from geatpy.operators.mutation.Mutuni import Mutuni
+from geatpy.operators.recombination.Recdis import Recdis
+from geatpy.operators.recombination.Recint import Recint
+from geatpy.operators.recombination.Reclin import Reclin
+from geatpy.operators.recombination.Recndx import Recndx
+from geatpy.operators.recombination.Recombination import Recombination
+from geatpy.operators.recombination.Recsbx import Recsbx
+from geatpy.operators.recombination.Xovbd import Xovbd
+from geatpy.operators.recombination.Xovdp import Xovdp
+from geatpy.operators.recombination.Xovexp import Xovexp
+from geatpy.operators.recombination.Xovox import Xovox
+from geatpy.operators.recombination.Xovpmx import Xovpmx
+from geatpy.operators.recombination.Xovsec import Xovsec
+from geatpy.operators.recombination.Xovsh import Xovsh
+from geatpy.operators.recombination.Xovsp import Xovsp
+from geatpy.operators.recombination.Xovud import Xovud
+# import visualization
+from geatpy.visualization.ParCoordPlotter import ParCoordPlotter
+from geatpy.visualization.PointScatter import PointScatter

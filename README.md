@@ -1,34 +1,58 @@
-# **Geatpy2** 
+# **Geatpy2**
 The Genetic and Evolutionary Algorithm Toolbox for Python with high performance.
 
-![Travis](https://travis-ci.org/geatpy-dev/geatpy.svg?branch=master)
 [![Package Status](https://img.shields.io/pypi/status/geatpy.svg)](https://pypi.org/project/geatpy/)
-[![License](https://img.shields.io/pypi/l/geatpy.svg)](https://github.com/geatpy-dev/geatpy/blob/master/LICENSE)
 ![Python](https://img.shields.io/badge/python->=3.5-green.svg)
-![Pypi](https://img.shields.io/badge/pypi-2.2.3-blue.svg)
+![Pypi](https://img.shields.io/badge/pypi-2.7.0-blue.svg)
+[![Download](https://img.shields.io/pypi/dm/geatpy.svg)](https://pypi.python.org/pypi/geatpy)
+[![License](https://img.shields.io/pypi/l/geatpy.svg)](https://github.com/geatpy-dev/geatpy/blob/master/LICENSE)
+[![Gitter](https://badges.gitter.im/geatpy2/community.svg)](https://gitter.im/geatpy2/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Introduction
-* **Website (including documentation)**: http://www.geatpy.com
-* **Demo** : https://github.com/geatpy-dev/geatpy/tree/master/geatpy/demo
+* **Website (including documentation)**: https://geatpy.github.io/
+* **Quickstart**: https://github.com/geatpy-dev/geatpy/blob/master/docs/quickstart.html        
+* **Demo** : https://github.com/geatpy-dev/geatpy/tree/master/demo
 * **Pypi page** : https://pypi.org/project/geatpy/
-* **Contact us**: http://geatpy.com/index.php/about/
 * **Bug reports**: https://github.com/geatpy-dev/geatpy/issues
-* **Notice**: http://geatpy.com/index.php/notice/
-* **FAQ**: http://geatpy.com/index.php/faq/
 
-Geatpy provides:
+## How to Cite
+Jazzbin, J. "Geatpy: the genetic and evolutionary algorithm toolbox with high performance in python." https://github.com/geatpy-dev/geatpy/ (accessed 2020) (2020).
 
-* global optimization capabilities in **Python** using genetic and other evolutionary algorithms to solve problems unsuitable for traditional optimization approaches.
+The features of Geatpy:
 
-* a great many of **evolutionary operators**, so that you can deal with **single, multiple and many objective optimization** problems.
+* Capability of solving single-objective, multi-objectives, many-objectives and combinatorial optimization problems fast.
 
-## Improvement of Geatpy 2.2.3
+* A huge number of operators with high performance of evolutionary algorithms (selection, recombination, mutation, migration...).
 
-* Improve the performance of crtpp and ranking.
+* Support numerous encodings for the chromosome of the population.
 
-* Rebuild the core of NSGA-II, NSGA-III and RVEA to get higher performances.
+* Many evolutionary algorithm templates, including GA, DE, ES for single/multi-objective(s) evolution.
 
-* Add new multi-objective optimization test problem: TNK.
+* Multiple population evolution.
+
+* Support polysomy evolution.
+
+* Parallelization and distribution of evaluations.
+
+* Testbeds containing most common benchmarks functions.
+
+* Support tracking analysis of the evolution iteration.
+
+* Many evaluation metrics of algorithms.
+
+## Improvement of Geatpy 2.7.0
+
+* Add a new way to define the aim function of the problem.
+
+* Support calculating objectives and constraints for the variables of only one individual.
+
+* Add a optimize function to do the optimization more convenient.
+
+* Add new open-source plotting functions.
+
+* Remove the dependency on scipy.
+
+* A new and faster core.
 
 ## Installation
 1.Installing online:
@@ -43,11 +67,11 @@ or
 
     pip install <filename>.whl
 
-**Attention**: Geatpy requires numpy>=1.16.0, matplotlib>=3.0.0 and scipy>=1.0.0, the installation program won't help you install them so that you have to install both of them by yourselves.
+**Attention**: Geatpy requires numpy>=1.17.0 and matplotlib>=3.0.0, the installation program won't help you install them so that you have to install both of them by yourselves.
 
 ## Versions
 
-**Geatpy** must run under **Python**3.5, 3.6 or 3.7 in Windows x32/x64, Linux x64 or Mac OS x64.
+**Geatpy** must run under **Python**3.5, 3.6, 3.7, 3.8, 3.9, or 3.10 in Windows x32/x64, Linux x64 or MacOS x64.
 
 There are different versions for **Windows**, **Linux** and **Mac**, you can download them from http://geatpy.com/
 
@@ -94,7 +118,7 @@ class MyProblem(ea.Problem): # Inherited from Problem class.
         g = np.array([100 * (self.Dim - self.M + 1 + np.sum(((XM - 0.5)**2 - np.cos(20 * np.pi * (XM - 0.5))), 1))]).T
         ones_metrix = np.ones((Vars.shape[0], 1))
         pop.ObjV = 0.5 * np.fliplr(np.cumprod(np.hstack([ones_metrix, Vars[:,:self.M-1]]), 1)) * np.hstack([ones_metrix, 1 - Vars[:, range(self.M - 2, -1, -1)]]) * np.tile(1 + g, (1, self.M))
-    def calBest(self): # Calculate the theoretic global optimal solution here.
+    def calReferObjV(self): # Calculate the theoretic global optimal solution here.
         uniformPoint, ans = ea.crtup(self.M, 10000) # create 10000 uniform points.
         realBestObjV = uniformPoint / 2
         return realBestObjV
@@ -106,45 +130,36 @@ class MyProblem(ea.Problem): # Inherited from Problem class.
 """main.py"""
 import geatpy as ea # Import geatpy
 from MyProblem import MyProblem # Import MyProblem class
-"""=========================Instantiate your problem=========================="""
-M = 3                      # Set the number of objects.
-problem = MyProblem(M)     # Instantiate MyProblem class
-"""===============================Population set=============================="""
-Encoding = 'RI'            # Encoding type.
-NIND = 100                 # Set the number of individuals.
-Field = ea.crtfld(Encoding, problem.varTypes, problem.ranges, problem.borders) # Create the field descriptor.
-population = ea.Population(Encoding, Field, NIND) # Instantiate Population class(Just instantiate, not initialize the population yet.)
-"""================================Algorithm set==============================="""
-myAlgorithm = ea.moea_NSGA3_templet(problem, population) # Instantiate a algorithm class.
-myAlgorithm.MAXGEN = 500 # Set the max times of iteration.
-"""===============================Start evolution=============================="""
-NDSet = myAlgorithm.run() # Run the algorithm templet.
-"""=============================Analyze the result============================="""
-PF = problem.calBest() # Get the global pareto front.
-GD = ea.indicator.GD(NDSet.ObjV, PF) # Calculate GD
-IGD = ea.indicator.IGD(NDSet.ObjV, PF) # Calculate IGD
-HV = ea.indicator.HV(NDSet.ObjV, PF) # Calculate HV
-Space = ea.indicator.spacing(NDSet.ObjV) # Calculate Space
-print('The number of non-dominated result: %s'%(NDSet.sizes))
-print('GD: ',GD)
-print('IGD: ',IGD)
-print('HV: ', HV)
-print('Space: ', Space)
+if __name__ == '__main__':
+    M = 3                      # Set the number of objects.
+    problem = MyProblem(M)     # Instantiate MyProblem class
+    # Instantiate a algorithm class.
+    algorithm = ea.moea_NSGA3_templet(problem,
+                                      ea.Population(Encoding='RI', NIND=100),  # Set 100 individuals.
+                                      MAXGEN=500,  # Set the max iteration number.
+                                      logTras=1)  # Set the frequency of logging. If it is zero, it would not log.
+    # Do the optimization
+    res = ea.optimize(algorithm, verbose=False, drawing=1, outputMsg=True, drawLog=True, saveFlag=True)
+
 ```
 
-Run the "main.py" and the result is:
+Run the "main.py" and the part of the result is:
 
-![image](https://github.com/geatpy-dev/geatpy/blob/master/geatpy/testbed/moea_test/moea_test_DTLZ/Pareto%20Front.svg)
+![image](https://github.com/geatpy-dev/geatpy/blob/master/testbed/moea_test/result/Pareto%20Front%20Plot.svg)
 
-The number of non-dominated result: 91
+Execution time: 0.3650233745574951 s
 
-GD:  0.00019492736742063313
+Evaluation number: 45500
 
-IGD:  0.02058320808720775
+The number of non-dominated solutions is: 91
 
-HV:  0.8413590788841248
+gd: 0.00033
 
-Space:  0.00045742613969278813
+igd: 0.02084
+
+hv: 0.84061
+
+spacing: 0.00158
 
 For solving another problem: **Ackley-30D**, which has only one object and 30 decision variables, what you need to do is almost the same as above.
 
@@ -171,7 +186,7 @@ class Ackley(ea.Problem): # Inherited from Problem class.
         n = self.Dim
         f = np.array([-20 * np.exp(-0.2*np.sqrt(1/n*np.sum(x**2, 1))) - np.exp(1/n * np.sum(np.cos(2 * np.pi * x), 1)) + np.e + 20]).T
         return f, CV
-    def calBest(self): # Calculate the global optimal solution here.
+    def calReferObjV(self): # Calculate the global optimal solution here.
         realBestObjV = np.array([[0]])
         return realBestObjV
 ```
@@ -182,40 +197,28 @@ class Ackley(ea.Problem): # Inherited from Problem class.
 import geatpy as ea # import geatpy
 import numpy as np
 from MyProblem import Ackley
-"""=========================Instantiate your problem=========================="""
-problem = Ackley(30) # Instantiate MyProblem class.
-"""===============================Population set=============================="""
-Encoding = 'RI'                # Encoding type.
-NIND = 20                      # Set the number of individuals.
-Field = ea.crtfld(Encoding, problem.varTypes, problem.ranges, problem.borders) # Create the field descriptor.
-population = ea.Population(Encoding, Field, NIND) # Instantiate Population class(Just instantiate, not initialize the population yet.)
-"""================================Algorithm set==============================="""
-myAlgorithm = ea.soea_DE_rand_1_bin_templet(problem, population) # Instantiate a algorithm class.
-myAlgorithm.MAXGEN = 1000      # Set the max times of iteration.
-myAlgorithm.mutOper.F = 0.5    # Set the F of DE
-myAlgorithm.recOper.XOVR = 0.2 # Set the Cr of DE (Here it is marked as XOVR)
-myAlgorithm.drawing = 1 # 1 means draw the figure of the result
-"""===============================Start evolution=============================="""
-[population, obj_trace, var_trace] = myAlgorithm.run() # Run the algorithm templet.
-"""=============================Analyze the result============================="""
-best_gen = np.argmin(obj_trace[:, 1]) # Get the best generation.
-best_ObjV = np.min(obj_trace[:, 1])
-print('The objective value of the best solution is: %s'%(best_ObjV))
-print('Effective iteration times: %s'%(obj_trace.shape[0]))
-print('The best generation is: %s'%(best_gen + 1))
-print('The number of evolution is: %s'%(myAlgorithm.evalsNum))
+if __name__ == '__main__':
+    # Instantiate MyProblem class.
+    problem = Ackley(30)
+    # Instantiate a algorithm class.
+    algorithm = ea.soea_DE_rand_1_bin_templet(problem,
+                                              ea.Population(Encoding='RI', NIND=20),
+                                              MAXGEN=1000,  # Set the max times of iteration.
+                                              logTras=1)  # Set the frequency of logging. If it is zero, it would not log.
+    algorithm.mutOper.F = 0.5  # Set the F of DE
+    algorithm.recOper.XOVR = 0.2  # Set the Cr of DE (Here it is marked as XOVR)
+    # Do the optimization
+    res = ea.optimize(algorithm, verbose=False, drawing=1, outputMsg=True, drawLog=True, saveFlag=True, dirName='result')
 ```
 
-The result is:
+Part of the result is:
 
-![image](https://github.com/geatpy-dev/geatpy/blob/master/geatpy/testbed/soea_test/soea_test_Ackley/result1.svg)
+![image](https://github.com/geatpy-dev/geatpy/blob/master/testbed/soea_test/result/Trace%20Plot.svg)
 
-The objective value of the best solution is: 5.8686921988737595e-09
+Execution time: 0.256328821182251 s
 
-Effective iteration times: 1000
+Evaluation number: 20000
 
-The best generation is: 1000
+The best objective value is: 3.209895993450118e-08
 
-The number of evolution is: 20000
-
-To get more tutorials, please link to http://www.geatpy.com.
+To get more tutorials, please link to [http://www.geatpy.com](https://github.com/geatpy-dev/geatpy/tree/master/docs).
